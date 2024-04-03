@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form Page</title>
+    <link rel="stylesheet" type="text/css" href="form.css">
+</head>
+
+<body>
+
+    <form method="POST" action="https://tasinmsbd.activehosted.com/proc.php" id="_form_1_"
+        class="_form _form_1 _inline-form  _dark" novalidate data-styles-version="5">
+        <input type="hidden" name="u" value="1" />
+        <input type="hidden" name="f" value="1" />
+        <input type="hidden" name="s" />
+        <input type="hidden" name="c" value="0" />
+        <input type="hidden" name="m" value="0" />
+        <input type="hidden" name="act" value="sub" />
+        <input type="hidden" name="v" value="2" />
+        <input type="hidden" name="or" value="e03e6cc4-1814-4d88-8c01-600675b86a04" />
+        <div class="_form-content">
+            <div class="_form_element _x44599612 _full_width _clear">
+                <div class="_form-title">
+                    Subscribe for Email Updates
+                </div>
+            </div>
+            <div class="_form_element _x89859462 _full_width _clear">
+                <div class="_html-code">
+                    <p>
+                        Add a descriptive message telling what your visitor is signing up for here.
+                    </p>
+                </div>
+            </div>
+            <div class="_form_element _x53799654 _full_width ">
+                <label for="fullname" class="_form-label">
+                    Full Name
+                </label>
+                <div class="_field-wrapper">
+                    <input type="text" id="fullname" name="fullname" placeholder="Type your name" />
+                </div>
+            </div>
+            <div class="_form_element _x78473051 _full_width ">
+                <label for="email" class="_form-label">
+                    Email*
+                </label>
+                <div class="_field-wrapper">
+                    <input type="text" id="email" name="email" placeholder="Type your email" required />
+                </div>
+            </div>
+            <div class="_button-wrapper _full_width">
+                <button id="_form_1_submit" class="_submit" type="submit">
+                    Submit
+                </button>
+            </div>
+            <div class="_clear-element">
+            </div>
+        </div>
+        <div class="_form-thank-you" style="display:none;">
+        </div>
+        <div class="_form-branding">
+            <div class="_marketing-by">
+                Marketing by
+            </div>
+            <a href="https://www.activecampaign.com/?utm_medium=referral&utm_campaign=acforms" class="_logo">
+                <span class="form-sr-only">
+                    ActiveCampaign
+                </span>
+            </a>
+        </div>
+    </form>
+
+    <script src="form.js"></script>
+
+    <script>
+        window._form_callback = function (id) {
+            var form = document.getElementById("_form_" + id + "_");
+            var fullname = form.querySelector("input[name='fullname']").value;
+            var email = form.querySelector("input[name='email']").value;
+
+            localStorage.setItem("fullname", fullname);
+            localStorage.setItem("email", email);
+
+            window.location.href = "video.html";
+        };
+    </script>
+
+</body>
+
+</html>
