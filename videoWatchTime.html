@@ -3,7 +3,7 @@
 
 <head>
     <title>Video Page</title>]
-    
+
     <style>
         body {
             display: flex;
@@ -58,23 +58,20 @@
             var iframe = document.querySelector("#vimeo-player");
             var player = new Vimeo.Player(iframe);
             var maxWatchedTime = 0;
+            var percentageWatched = 0;
 
             player.on("timeupdate", function (data) {
                 if (data.seconds > maxWatchedTime) {
                     maxWatchedTime = data.seconds;
                 }
-                var minutes = Math.floor(maxWatchedTime / 60);
-                var seconds = Math.floor(maxWatchedTime % 60);
 
-                console.log(
-                    "Email: " +
-                    email +
-                    "\nWatch Time: " +
-                    minutes +
-                    " minutes " +
-                    seconds +
-                    " seconds"
-                );
+                player.getDuration().then(function (duration) {
+                    percentageWatched =
+                        Math.round((maxWatchedTime / duration) * 100 * 100) / 100;
+                });
+
+                console.log(`Email: ${email}`);
+                console.log(`Watch Percentage: ${percentageWatched}%`);
             });
 
             window.onbeforeunload = function () {
@@ -83,19 +80,29 @@
 
             window.addEventListener("beforeunload", (event) => {
                 const zapierWebhookUrl =
-                    "https://hooks.zapier.com/hooks/catch/18433711/3pd7xfj/";
+                    "https://hooks.zapier.com/hooks/catch/18433711/3p5qbbe/";
 
-                var watchTime =
-                    Math.floor(maxWatchedTime / 60) +
-                    " minutes " +
-                    Math.floor(maxWatchedTime % 60) +
-                    " seconds";
+                if (percentageWatched < 10) {
+                    percentageWatched = 0;
+                } else if (10 <= percentageWatched && percentageWatched < 25) {
+                    percentageWatched = 10;
+                } else if (25 < percentageWatched && percentageWatched <= 50) {
+                    percentageWatched = 25;
+                } else if (50 < percentageWatched && percentageWatched <= 75) {
+                    percentageWatched = 50;
+                } else if (75 < percentageWatched && percentageWatched <= 90) {
+                    percentageWatched = 75;
+                } else if (90 < percentageWatched && percentageWatched <= 99) {
+                    percentageWatched = 90;
+                } else if (percentageWatched > 99) {
+                    percentageWatched = 100;
+                }
 
                 // Data to be sent in the POST request
                 const postData = {
                     contact: {
                         email: email,
-                        watchTime: watchTime,
+                        watchPercentage: `${percentageWatched}%`,
                     },
                 };
 
