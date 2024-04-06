@@ -25,7 +25,7 @@
     <div class="video-container">
         <div style="padding:56.21% 0 0 0;position:relative;">
             <iframe id="vimeo-player"
-                src="https://player.vimeo.com/video/929201355?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479&amp;autoplay=1"
+                src="https://player.vimeo.com/video/929201355?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479&amp;"
                 frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write"
                 style="position:absolute;top:0;left:0;width:100%;height:100%;"
                 title="Beerus Being Scared of Zeno For a Solid 7 Minutes">
@@ -38,19 +38,19 @@
 
 
         <!-- Add parameters to the URL -->
-        <script>
+        <!-- <script>
             // Get the current URL
             var currentURL = window.location.href;
 
             // Check if the URL already has the email parameter
-            if (!currentURL.includes('?email=yoo%40gmail.com')) {
+            if (!currentURL.includes('?email=dhakanew%40gmail.com')) {
                 // Append the email parameter to the URL
-                currentURL += '?email=yoo%40gmail.com';
+                currentURL += '?email=dhakanew%40gmail.com';
 
                 // Redirect to the modified URL
                 window.location.href = currentURL;
             }
-        </script>
+        </script> -->
 
         <script>
             function sendWatchPercentage(email, percentageWatched) {
@@ -114,6 +114,11 @@
             var player = new Vimeo.Player(iframe);
             var maxWatchedTime = 0;
             var percentageWatched = 0;
+
+            document.addEventListener("DOMContentLoaded", () => {
+                console.log('Loaded');
+                sendWatchPercentage(email, percentageWatched);
+            });
 
             player.on("timeupdate", function (data) {
                 if (data.seconds > maxWatchedTime) {
