@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>Video Page</title>]
+    <title>Video Page</title>
 
     <style>
         body {
@@ -32,6 +32,8 @@
             </iframe>
         </div>
 
+        <button id="paymentButton" style="margin-top: 10px;">Payment</button>
+
         <script src="https://player.vimeo.com/api/player.js"></script>
 
 
@@ -41,9 +43,9 @@
             var currentURL = window.location.href;
 
             // Check if the URL already has the email parameter
-            if (!currentURL.includes('?email=abid%40technosway.com')) {
+            if (!currentURL.includes('?email=yoo%40gmail.com')) {
                 // Append the email parameter to the URL
-                currentURL += '?email=abid%40technosway.com';
+                currentURL += '?email=yoo%40gmail.com';
 
                 // Redirect to the modified URL
                 window.location.href = currentURL;
@@ -51,48 +53,22 @@
         </script>
 
         <script>
-            // Retrieve email and full name from URL parameters
-            var urlParams = new URLSearchParams(window.location.search);
-            var email = urlParams.get("email");
+            function sendWatchPercentage(email, percentageWatched) {
+                const zapierWebhookUrl = "https://hooks.zapier.com/hooks/catch/18433711/3p5qbbe/";
 
-            var iframe = document.querySelector("#vimeo-player");
-            var player = new Vimeo.Player(iframe);
-            var maxWatchedTime = 0;
-            var percentageWatched = 0;
-
-            player.on("timeupdate", function (data) {
-                if (data.seconds > maxWatchedTime) {
-                    maxWatchedTime = data.seconds;
-                }
-
-                player.getDuration().then(function (duration) {
-                    percentageWatched =
-                        Math.round((maxWatchedTime / duration) * 100 * 100) / 100;
-                });
-
-                console.log(`Email: ${email}`);
-                console.log(`Watch Percentage: ${percentageWatched}%`);
-            });
-
-            window.onbeforeunload = function () {
-                return "";
-            };
-
-            window.addEventListener("beforeunload", (event) => {
-                const zapierWebhookUrl =
-                    "https://hooks.zapier.com/hooks/catch/18433711/3p5qbbe/";
-
-                if (percentageWatched < 10) {
+                if (percentageWatched < 1) {
                     percentageWatched = 0;
+                } else if (1 <= percentageWatched && percentageWatched < 10) {
+                    percentageWatched = 1;
                 } else if (10 <= percentageWatched && percentageWatched < 25) {
                     percentageWatched = 10;
-                } else if (25 < percentageWatched && percentageWatched <= 50) {
+                } else if (25 <= percentageWatched && percentageWatched <= 50) {
                     percentageWatched = 25;
-                } else if (50 < percentageWatched && percentageWatched <= 75) {
+                } else if (50 <= percentageWatched && percentageWatched <= 75) {
                     percentageWatched = 50;
-                } else if (75 < percentageWatched && percentageWatched <= 90) {
+                } else if (75 <= percentageWatched && percentageWatched <= 90) {
                     percentageWatched = 75;
-                } else if (90 < percentageWatched && percentageWatched <= 99) {
+                } else if (90 <= percentageWatched && percentageWatched <= 99) {
                     percentageWatched = 90;
                 } else if (percentageWatched > 99) {
                     percentageWatched = 100;
@@ -126,6 +102,50 @@
                     .catch((error) => {
                         console.error("Error:", error);
                     });
+            }
+        </script>
+
+        <script>
+            // Retrieve email and full name from URL parameters
+            var urlParams = new URLSearchParams(window.location.search);
+            var email = urlParams.get("email");
+
+            var iframe = document.querySelector("#vimeo-player");
+            var player = new Vimeo.Player(iframe);
+            var maxWatchedTime = 0;
+            var percentageWatched = 0;
+
+            player.on("timeupdate", function (data) {
+                if (data.seconds > maxWatchedTime) {
+                    maxWatchedTime = data.seconds;
+                }
+
+                player.getDuration().then(function (duration) {
+                    percentageWatched =
+                        Math.round((maxWatchedTime / duration) * 100 * 100) / 100;
+                });
+
+                console.log(`Email: ${email}`);
+                console.log(`Watch Percentage: ${percentageWatched}%`);
+            });
+
+            var buttonClicked = false;
+            document.getElementById('paymentButton').addEventListener('click', function () {
+                buttonClicked = true;
+                sendWatchPercentage(email, percentageWatched);
+                setTimeout(function () {
+                    window.location.href = "payment.html";
+                }, 2000);
+            });
+
+            window.onbeforeunload = function () {
+                if (!buttonClicked) {
+                    return "";
+                }
+            };
+
+            window.addEventListener("beforeunload", (event) => {
+                sendWatchPercentage(email, percentageWatched);
             });
 
         </script>
