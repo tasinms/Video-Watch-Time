@@ -17,25 +17,22 @@
             </iframe>
         </div>
 
+        <div>
+            <button id="paymentButton" style="margin-top: 10px;">Payment</button>
+        </div>
+
         <script src="https://player.vimeo.com/api/player.js"></script>
 
 
         <!-- Add parameters to the URL -->
         <script>
-            // Get the current URL
-            var currentURL = window.location.href;
-
-            // Check if the URL already has the email parameter
-            if (!currentURL.includes('?email=abid%40technosway.com')) {
-                // Append the email parameter to the URL
-                currentURL += '?email=abid%40technosway.com';
-
-                // Redirect to the modified URL
-                window.location.href = currentURL;
-            }
+            utmParams = "utm_source=zoomlive&utm_campaign=MC_250124&utm_content=cta-live_250124&el=zoomlive&p_prop=franckrocca"
+            document.getElementById('paymentButton').addEventListener('click', function () {
+                setTimeout(function () {
+                    window.location.href = "https://go.franckrocca.com/appel-decouverte-555-vsl" + "?" + utmParams;
+                }, 2000);
+            });
         </script>
-
-        <script src="webHookOnClose.js"></script>
 
     </div>
 </body>
